@@ -10,7 +10,7 @@ app.router = Router;
 // Its Better to wait for the DOM to load before executing scripts 
 window.addEventListener("DOMContentLoaded", async function () {
     app.store.menu = await API.fetchMenu();
-    console.log("Menu", app.store.menu);
+    //console.log("Menu", app.store.menu);
     app.router.init(); 
 
 });
