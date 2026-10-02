@@ -6,30 +6,33 @@ const Router = {
                 Router.go(event.target.getAttribute("href"));
             });
         });
-        window.addEventListener("popstate", () => {
+        window.addEventListener("popstate", event => {
             Router.go(event.state.route, false);
         });
+        console.log(location.pathname)
         Router.go(location.pathname);
     },
     go: (route, addToHistory=true) => {
-        console.log("Going to: " + route, addToHistory);
+        console.log("Going to: ", route, addToHistory);
         if(addToHistory) {
             history.pushState({route}, null, route);
         }
         let pageElement = null;
         switch (route) {
             case "/":
-                pageElement = document.createElement("h1");
-                pageElement.textContent = "Menu";
+                pageElement = document.createElement("menu-page");
+              
                 break;
             case "/order":
-                pageElement = document.createElement("h1");
-                pageElement.textContent = "Order";
+                pageElement = document.createElement("order-page");
                 break;
             default:
-               if(route.startsWith("/product")) {
-                   pageElement = document.createElement("h1");
-                   pageElement.textContent = "Product";
+               if(route.startsWith("/product/")) {
+                   pageElement = document.createElement("details-page");
+                   const id = route.split("/")[2];
+                   pageElement.dataset.id = id;
+                   pageElement.textContent = "Produto ID: " + id
+                   
                }else{
                 pageElement = document.createElement("h1");
                 pageElement.textContent = "Not Found";
@@ -45,5 +48,4 @@ const Router = {
         }
     }
 }
-
 export default Router;
